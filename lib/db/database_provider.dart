@@ -45,7 +45,6 @@ class DatabaseProvider{
       'users',
       loginDetails,
       where: 'id = 1',
-      whereArgs: loginDetails['id'],
     );
   }
 

@@ -58,7 +58,7 @@ class _TopNewsState extends State<TopNews> {
                     children: [
                       SizedBox(
                         width: double.infinity,
-                        height: 120,
+                        height: 140,
                         child: widget.topNews['articles'][index]['urlToImage'] != null ? ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
@@ -82,7 +82,7 @@ class _TopNewsState extends State<TopNews> {
                       ),
                       Container(
                         width: double.infinity,
-                        height: 120,
+                        height: 140,
                         decoration: BoxDecoration(
                           color: Colors.grey[900]!.withOpacity(0.6),
                           borderRadius: BorderRadius.circular(10),

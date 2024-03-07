@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:newsapp/screens/home.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:newsapp/ui_models/message_dialog.dart';
 import 'dashboard.dart';
 import 'db/database_provider.dart';
 
@@ -46,9 +46,20 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkLoginStatus() async {
-    final user = await DatabaseProvider.db.getUser();
+    List user = [];
+    try{
+      user = await DatabaseProvider.db.getUser();
+    }catch(e){
+      showDialog(
+          context: context,
+          builder: (context) => Center(
+              child: MyMessageDialog(
+                  context: context,
+                  isError: true,
+                  massage: "Server error")
+                  .get()));
+    }
 
-    print(user);
     if(user == null || user[0]['isLogged'] == "N"){
       Navigator.of(context).pushReplacementNamed('/login');
     } else {
@@ -60,7 +71,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: SizedBox(
+          height: 150,
+          width: 150,
+          child: Image(image: AssetImage('assests/images/newsapplogo.png'),fit: BoxFit.fill,)
+        ),
       ),
     );
   }
@@ -92,24 +107,59 @@ class _LoginState extends State<Login> {
         ),
         logo: const AssetImage('assests/images/newsapplogo.png'),
         onLogin: (data) async{
-          final user = await DatabaseProvider.db.getUser();
-          print("user $user");
-          return "Incorrect Password";
-          //Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Home()));
+          List user = [];
+          try{
+            user = await DatabaseProvider.db.getUser();
+          }catch(e){
+            showDialog(
+                context: context,
+                builder: (context) => Center(
+                    child: MyMessageDialog(
+                        context: context,
+                        isError: true,
+                        massage: "Server error")
+                        .get()));
+          }
+
+          try{
+            await DatabaseProvider.db.updateUser({
+              "id": 1,
+              "username": user[0]['username'],
+              "password": user[0]['password'],
+              "isLogged": "Y",
+              "creation_date": DateTime.now().toString(),
+            });
+          }catch(e){
+            showDialog(
+                context: context,
+                builder: (context) => Center(
+                    child: MyMessageDialog(
+                        context: context,
+                        isError: true,
+                        massage: "Server error")
+                        .get()));
+          }
+
+          if(user == null){
+            return "Don't have an account? Sign up now!";
+          }else if(user[0]['username'] != data.name || user[0]['password'] != data.password){
+            return "Incorrect User Name or Password";
+          }else{
+            Navigator.of(context).pushReplacementNamed('/home');
+          }
         },
-        onSignup: (data){
-          DatabaseProvider.db.createUser({
+        onSignup: (data) async{
+          await DatabaseProvider.db.createUser({
             "id": 1,
             "username": data.name,
             "password": data.password,
             "isLogged": "Y",
             "creation_date": DateTime.now().toString(),
           });
+          Navigator.of(context).pushReplacementNamed('/home');
         },
         onSubmitAnimationCompleted: () {
-          // Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //   builder: (context) => const DashboardScreen(),
-          // ));
+
         },
         onRecoverPassword: (data){
 
