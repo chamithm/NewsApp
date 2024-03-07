@@ -45,7 +45,7 @@ class MyTextField {
       return Container(
         color: Colors.white,
         child: SizedBox(
-          height: height ?? 30,
+          height: height ?? 35,
           child: Theme(
             data: ThemeData(
               primaryColor: Colors.black45,
@@ -109,7 +109,7 @@ class MyTextField {
       return Container(
         color: Colors.white,
         child: SizedBox(
-          height: height ?? 30,
+          height: height ?? 35,
           child: Theme(
             data: ThemeData(
               primaryColor: Colors.black45,

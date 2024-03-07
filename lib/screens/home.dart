@@ -36,132 +36,134 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(height: 10,),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(12, 5, 0, 5),
-                  child: MyTextField(
-                      type: tabIndex == 0 ? MyTextFieldTypes.all : MyTextFieldTypes.disabled,
-                      controller: search,
-                      label: 'Search',
-                      suffix: const Icon(Icons.search,size: 20,color: Colors.black54,),
-                      maxLength: 30)
-                      .get(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: InkWell(
-                  onTap: (){
-                    if(search.text.isNotEmpty){
-                      topNewsTitle = search.text;
-                      getSearchNews(search.text);
-                    }else{
-                      topNewsTitle = "Top News";
-                    }
-                    setState(() {
-
-                    });
-                  },
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            const SizedBox(height: 15,),
+            Row(
+              children: [
+                Expanded(
                   child: Container(
-                    width: 28,
-                    height: 28,
-                    child: Icon(Icons.search, size: 17,color: Colors.white,),
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.all(Radius.circular(50))
+                    padding: const EdgeInsets.fromLTRB(12, 5, 0, 5),
+                    child: MyTextField(
+                        type: tabIndex == 0 ? MyTextFieldTypes.all : MyTextFieldTypes.disabled,
+                        controller: search,
+                        label: 'Search',
+                        suffix: const Icon(Icons.search,size: 20,color: Colors.black54,),
+                        maxLength: 30)
+                        .get(),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: InkWell(
+                    onTap: (){
+                      if(search.text.isNotEmpty){
+                        topNewsTitle = search.text;
+                        getSearchNews(search.text);
+                      }else{
+                        topNewsTitle = "Top News";
+                      }
+                      setState(() {
+
+                      });
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      child: Icon(Icons.search, size: 18,color: Colors.white,),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.all(Radius.circular(50))
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10,),
-          Expanded(
-            child: DefaultTabController(
-              length: 6,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0,right: 12.0),
-                    child: ButtonsTabBar(
-                      backgroundColor: Colors.red,
-                      unselectedBackgroundColor: Colors.grey[50],
-                      unselectedBorderColor: Colors.grey[400]!,
-                      borderWidth: 1,
-                      radius: 20,
-                      height: 35,
-                      borderColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                      labelStyle: GoogleFonts.titilliumWeb(
-                        fontSize: 12,
-                        color: Colors.white,),
-                      unselectedLabelStyle: GoogleFonts.titilliumWeb(
-                        fontSize: 12,
-                        color: Colors.black,),
-                      tabs: const [
-                        Tab(
-                          text: "Top News",
-                        ),
-                        Tab(
-                          text: "Breaking News",
-                        ),
-                        Tab(
-                          text: "Top Headline",
-                        ),
-                        Tab(
-                          text: "Category",
-                        ),
-                        Tab(
-                          text: "Language",
-                        ),
-                        Tab(
-                          text: "Country",
-                        ),
-                      ],
-                      onTap: (index){
-                        tabIndex = index;
-                        if(index == 0){
-                          getTopNews();
-                          setState(() {
-
-                          });
-                        }else if(index == 1){
-                          getSearchNews("Breaking News");
-                          setState(() {
-
-                          });
-                        }else if(index == 2){
-                          getHeadLines();
-                          setState(() {
-
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: TabBarView(
-                      children: <Widget>[
-                        !isLoading ? TopNews(topNews,topNewsTitle) : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
-                        !isLoading  ? TopNews(topNews,"Breaking News") : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
-                        !isLoading  ? TopNews(topNews,"Top Headlines") : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
-                        !isLoading ? TopNews(topNews,topNewsTitle) : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
-                        !isLoading  ? TopNews(topNews,"Breaking News") : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
-                        !isLoading  ? TopNews(topNews,"Top Headlines") : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              ],
             ),
-          )
-        ],
+            const SizedBox(height: 10,),
+            Expanded(
+              child: DefaultTabController(
+                length: 6,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0,right: 12.0),
+                      child: ButtonsTabBar(
+                        backgroundColor: Colors.red,
+                        unselectedBackgroundColor: Colors.grey[50],
+                        unselectedBorderColor: Colors.grey[400]!,
+                        borderWidth: 1,
+                        radius: 20,
+                        height: 40,
+                        borderColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                        labelStyle: GoogleFonts.titilliumWeb(
+                          fontSize: 12,
+                          color: Colors.white,),
+                        unselectedLabelStyle: GoogleFonts.titilliumWeb(
+                          fontSize: 12,
+                          color: Colors.black,),
+                        tabs: const [
+                          Tab(
+                            text: "Top News",
+                          ),
+                          Tab(
+                            text: "Breaking News",
+                          ),
+                          Tab(
+                            text: "Top Headline",
+                          ),
+                          Tab(
+                            text: "Category",
+                          ),
+                          Tab(
+                            text: "Language",
+                          ),
+                          Tab(
+                            text: "Country",
+                          ),
+                        ],
+                        onTap: (index){
+                          tabIndex = index;
+                          if(index == 0){
+                            getTopNews();
+                            setState(() {
+
+                            });
+                          }else if(index == 1){
+                            getSearchNews("Breaking News");
+                            setState(() {
+
+                            });
+                          }else if(index == 2){
+                            getHeadLines();
+                            setState(() {
+
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        children: <Widget>[
+                          !isLoading ? TopNews(topNews,topNewsTitle) : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
+                          !isLoading  ? TopNews(topNews,"Breaking News") : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
+                          !isLoading  ? TopNews(topNews,"Top Headlines") : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
+                          !isLoading ? TopNews(topNews,topNewsTitle) : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
+                          !isLoading  ? TopNews(topNews,"Breaking News") : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
+                          !isLoading  ? TopNews(topNews,"Top Headlines") : const Center(child: CircularProgressIndicator(color: Colors.blue,)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
