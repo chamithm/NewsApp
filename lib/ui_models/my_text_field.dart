@@ -43,7 +43,7 @@ class MyTextField {
   Widget get() {
     if (type == MyTextFieldTypes.disabled) {
       return Container(
-        color: Colors.grey[200],
+        color: Colors.white,
         child: SizedBox(
           height: height ?? 30,
           child: Theme(
@@ -52,41 +52,54 @@ class MyTextField {
               primaryColorDark: Colors.black,
             ),
             child: TextField(
-              // style: GoogleFonts.titilliumWeb(
-              //     fontSize: 13,
-              //     color: Colors.black87,
-              //     fontWeight: FontWeight.w600),
+              style: GoogleFonts.titilliumWeb(
+                fontSize: 13,
+                color: Colors.black,),
               maxLength: maxLength,
+              focusNode: focusNode,
               enabled: false,
               controller: controller,
               textAlign: align ?? TextAlign.left,
               onChanged: onChanged,
               onSubmitted: onSubmitted,
               decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                contentPadding: const EdgeInsets.all(8.0),
-                counterText: '',
-                labelText: label,
-                labelStyle: const TextStyle(
-                    color: Colors.blueGrey, fontWeight: FontWeight.w100),
-                prefix: isMandatory != null
-                    ? isMandatory!
-                        ? null
-                        : const SizedBox(
-                            width: 8,
-                          )
-                    : const SizedBox(
-                        width: 8,
-                      ),
-                prefixIcon: isMandatory != null
-                    ? isMandatory!
-                        ? const Icon(
-                            Icons.star,
-                            color: Colors.red,
-                            size: 8,
-                          )
-                        : null
-                    : null,
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderSide: BorderSide(
+                        color: Colors.black54
+                    ),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderSide: BorderSide(
+                        color: Colors.black54
+                    ),
+                  ),
+                  counterText: '',
+                  labelText: label,
+                  labelStyle: GoogleFonts.titilliumWeb(
+                    fontSize: 13,
+                    color: Colors.black54,),
+                  prefix: isMandatory != null
+                      ? isMandatory!
+                      ? null
+                      : const SizedBox(
+                    width: 8,
+                  )
+                      : const SizedBox(
+                    width: 8,
+                  ),
+                  prefixIcon: isMandatory != null
+                      ? isMandatory!
+                      ? const Icon(
+                    Icons.star,
+                    color: Colors.red,
+                    size: 8,
+                  )
+                      : null
+                      : null,
+                  suffixIcon: suffix,
+                  contentPadding: EdgeInsets.only(left: 10, right: 10,top: 8,bottom: 8)
               ),
             ),
           ),
